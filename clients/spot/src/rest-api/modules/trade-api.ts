@@ -484,8 +484,13 @@ const TradeApiAxiosParamCreator = function (configuration: ConfigurationRestAPI)
             assertParamExists('newOrder', 'symbol', symbol);
             // verify required parameter 'quantity' is not null or undefined
             assertParamExists('newOrder', 'quantity', quantity);
-            // verify required parameter 'stopPrice' is not null or undefined
-            assertParamExists('newOrder', 'stopPrice', stopPrice);
+            // verify required parameter 'stopPrice' is not null or undefined for certain order types
+            if (type === NewOrderTypeEnum.STOP_LOSS ||
+                type === NewOrderTypeEnum.STOP_LOSS_LIMIT ||
+                type === NewOrderTypeEnum.TAKE_PROFIT ||
+                type === NewOrderTypeEnum.TAKE_PROFIT_LIMIT) {
+                assertParamExists('newOrder', 'stopPrice', stopPrice);
+            }
 
             const localVarQueryParameter: Record<string, unknown> = {};
 
